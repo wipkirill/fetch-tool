@@ -22,9 +22,8 @@ class MetaHandler(HandlerBase):
         )
 
     def apply(self, crawled_data):
-        with open(
-            os.path.join(self.settings.save_path, crawled_data["name"] + ".meta"), "w"
-        ) as f:
+        file_name = crawled_data["name"].replace("/", "\\") + ".meta"
+        with open(os.path.join(self.settings.save_path, file_name), "w") as f:
             now = datetime.datetime.now()
             data = {
                 "site": crawled_data["name"],
@@ -35,13 +34,12 @@ class MetaHandler(HandlerBase):
             json.dump(data, f)
 
     def read_meta(self, site_name):
-        no_prefix_name = site_name.replace("http://", "").replace("https://", "")
-        if not os.path.exists(
-            os.path.join(self.settings.save_path, no_prefix_name + ".meta")
-        ):
+        no_prefix_os_name = (
+            site_name.replace("http://", "").replace("https://", "").replace("/", "\\")
+            + ".meta"
+        )
+        if not os.path.exists(os.path.join(self.settings.save_path, no_prefix_os_name)):
             return None
-        with open(
-            os.path.join(self.settings.save_path, no_prefix_name + ".meta"), "r"
-        ) as f:
+        with open(os.path.join(self.settings.save_path, no_prefix_os_name), "r") as f:
             str_data = f.read()
             return json.loads(str_data)

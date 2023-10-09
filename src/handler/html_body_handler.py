@@ -18,7 +18,7 @@ class HtmlBodyHandler(HandlerBase):
         return "html_body" in crawled_data and "name" in crawled_data
 
     def apply(self, crawled_data):
-        file_name = crawled_data["name"] + ".html"
+        file_name = crawled_data["name"].replace("/", "\\") + ".html"
         with open(os.path.join(self.settings.save_path, file_name), "w") as f:
             f.write(crawled_data["html_body"])
         print(f"Successfully fetched {crawled_data['name']}")
