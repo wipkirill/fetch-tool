@@ -1,0 +1,15 @@
+*.pyc
+.idea
+venv*
+
+# pyinstaller
+build/
+dist/
+*.pyo
+
+fetch_meta/
+fetch_pages/
+
+
+
+
